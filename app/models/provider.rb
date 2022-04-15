@@ -1,18 +1,18 @@
 class Provider < ApplicationRecord
   def self.query(npi)
     begin
-      res = RestClient.get("#{Constants::NpiRegistryUrl}&number=#{npi}", timeout: 120)
+      res = RestClient.get("#{Constants::NpiRegistryUrl}&number=#{npi}", timeout: Constants::RestClientTimeOut)
       json = JSON.parse(res.body)
       return {result: :error, error: json["Errors"]} if json["Errors"].present?
       return {result: :error, error: 'Provider not found'} if json['results'] and json['result_count'] == 0
       record = json["results"].first
       return self.formatter(record)
     rescue RestClient::Exceptions::Timeout => e
-      return {result: :error, error: e.to_s}
+      return {result: :error, error: "120s timeout error"}
     rescue JSON::ParserError => e
-      return {result: :error, error: e.to_s}
+      return {result: :error, error: "API Data parsing error"}
     rescue StandardError => e
-      return {result: :error, error: e.to_s}
+      return {result: :error, error: "You have some error in the server"}
     end
   end
 
