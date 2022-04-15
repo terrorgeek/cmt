@@ -1,0 +1,17 @@
+<% if flash[:create_success] %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:create_success] %>
+  </div>
+<% end %>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
+<% if flash[:duplicated].present? %>
+  <div class="alert alert-warning" role="alert">
+    <%= flash[:duplicated] %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">CMT Solutions</a>
+    <%= form_tag providers_path, id: 'form-npi', class: 'form-inline', method: :post do %>
+      <%= text_field_tag :npi, '', class: 'form-control mr-sm-2', placeholder: 'NPI' %>      
+      <%= submit_tag 'Submit', class: 'btn btn-outline-success my-2 my-sm-0' %>
+    <% end %>
+</nav>
+
+
+<div class='container'>
+  <%= render partial: 'layouts/partials/flash' %>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">NPI</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Enumeration Type</th>
+        <th scope="col">Taxonomy Code</th>
+        <th scope="col">Taxonomy Desc</th>
+        <th scope="col">Organization Name</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "providers/partials/provider", collection: @providers %>
+    </tbody>
+  </table>
+</div>
