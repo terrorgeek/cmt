@@ -3,7 +3,7 @@ class Provider < ApplicationRecord
     begin
       res = RestClient.get("#{Constants::NpiRegistryUrl}&number=#{npi}", timeout: Constants::RestClientTimeOut)
       json = JSON.parse(res.body)
-      return {result: :error, error: json["Errors"]} if json["Errors"].present?
+      return {result: :error, error: json["Errors"].map! {|e| e['description'] }.join(",") } if json["Errors"].present?
       return {result: :error, error: 'Provider not found'} if json['results'] and json['result_count'] == 0
       record = json["results"].first
       return self.formatter(record)
